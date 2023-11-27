@@ -1,0 +1,6 @@
+﻿  main.cpp
+C:\Users\chrys\OneDrive - University of Florida\2023 fall\DSA\dsABC's\main.cpp(34,63): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\chrys\OneDrive - University of Florida\2023 fall\DSA\dsABC's\main.cpp(34,56): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\chrys\OneDrive - University of Florida\2023 fall\DSA\dsABC's\main.cpp(131,66): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\chrys\OneDrive - University of Florida\2023 fall\DSA\dsABC's\main.cpp(131,59): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+  Project3.vcxproj -> C:\Users\chrys\OneDrive - University of Florida\2023 fall\DSA\dsABC's\x64\Debug\Project3.exe
