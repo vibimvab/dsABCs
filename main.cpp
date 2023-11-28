@@ -99,6 +99,11 @@ int main()
     GenerateButtonTexture.loadFromFile("files/images/GenerateButton.png");
     GenerateButton.setTexture(GenerateButtonTexture);
     setSprite(GenerateButton, Width / 2.0f, Height / 2.0f + 50 + 50 + 200);
+    sf::Sprite Background;
+    sf::Texture BackgroundTexture;
+    BackgroundTexture.loadFromFile("files/images/Background.png");
+    Background.setTexture(BackgroundTexture);
+    setSprite(Background, Width / 2.0f, Height / 2.0f);
     sf::Sprite PossibleWords;
     sf::Texture PossibleWordsTexture;
     PossibleWordsTexture.loadFromFile("files/images/PossibleWord.png");
@@ -276,6 +281,7 @@ int main()
                         }
 
                         MainWindow.clear(sf::Color::White);
+                        MainWindow.draw(Background);
                         MainWindow.draw(GenerateButton);
                         MainWindow.draw(PossibleWords);
                         MainWindow.draw(MainScreenInstructionText);
@@ -286,10 +292,10 @@ int main()
                         sf::Text inputText;
                         inputText.setFont(welcomeScreenFont);
                         inputText.setString(StringInput);
-                        inputText.setCharacterSize(18);
+                        inputText.setCharacterSize(40);
                         inputText.setFillColor(sf::Color::Black);
                         inputText.setStyle(sf::Text::Bold);
-                        setText(inputText, Width / 2.0f, Height / 2.0f + 200);
+                        setText(inputText, Width / 2.0f, Height / 2.0f + 195);
                         MainWindow.draw(inputText);
                         MainWindow.display();
                     }
