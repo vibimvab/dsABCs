@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "Dictionary.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -25,7 +26,9 @@ void setSprite(sf::Sprite& text, float x, float y) {
 int main()
 {
     //Load up dictonary & store for later comparison
-    
+    Dictionary dictionary;
+     //Text input for main screen
+    string StringInput = "|";
 
     //sets width and height for pop up windows
     float Width = 1366, Height = 768, BoardSize = 15, TileCount = 7;
@@ -70,11 +73,20 @@ int main()
     MainScreenInstructionText.setFillColor(sf::Color::Black);
     MainScreenInstructionText.setStyle(sf::Text::Bold);
     setText(MainScreenInstructionText, Width / 2.0f, Height / 2.0f + 140);
+    sf::Text MainScreenLimitText;
+    MainScreenLimitText.setFont(welcomeScreenFont);
+    MainScreenLimitText.setString("*Use of ? limited to 2*");
+    MainScreenLimitText.setCharacterSize(20);
+    MainScreenLimitText.setFillColor(sf::Color::Black);
+    MainScreenLimitText.setStyle(sf::Text::Bold);
+    setText(MainScreenLimitText, Width / 2.0f + 200, Height / 2.0f + 250);
+
     sf::Text PossibleWordsText1;
     PossibleWordsText1.setFont(welcomeScreenFont);
     PossibleWordsText1.setCharacterSize(40);
     PossibleWordsText1.setFillColor(sf::Color::Black);
     PossibleWordsText1.setStyle(sf::Text::Bold);
+    
 
     //Make sprites (buttons)
     sf::Sprite BeginButton;
@@ -98,8 +110,7 @@ int main()
     TextBox.setTexture(TextBoxTexture);
     setSprite(TextBox, Width / 2.0f, Height / 2.0f + 195);
 
-    //Text input for main screen
-    string StringInput = "";
+   
 
     while (welcomeScreenWindow.isOpen()) {
         sf::Event event;
@@ -137,6 +148,84 @@ int main()
                         if (event.type == sf::Event::Closed) {
                             MainWindow.close();
                         }
+                        if (event.type == sf::Event::TextEntered && WelcomeScreenOpen == false) {
+                            switch (event.key.code) {
+                                //keycode for backspace is 8
+                            case 8:
+                                if (StringInput[StringInput.size() - 1] != '|' && StringInput.size() == 15) {
+                                    //if at max capacity and trying to delete
+                                    StringInput.erase(StringInput.begin() + StringInput.size() - 1);
+                                    StringInput.append("|");
+                                }
+                                else if (StringInput.size() == 1) {
+                                    //do nothing when no letters have been inputed yet (don't delete cursor)
+                                }
+                                else {
+                                    //any other circumstance
+                                    StringInput.erase(StringInput.begin() + StringInput.size() - 2);
+                                }
+                                break;
+                            default:
+                                string temp;
+                                if (StringInput.size() < 16) {
+                                    
+                                    if (((event.text.unicode > 64) && (event.text.unicode < 91))
+                                        || ((event.text.unicode > 96) && (event.text.unicode < 123)) || (event.text.unicode == 63)) {
+                                        temp += static_cast<char>(event.text.unicode);
+                                        if (event.text.unicode == 63 && StringInput.size() != 15) {
+                                            //check if 2 '?' limit reached
+                                            int QuesCount = 0;
+                                            for (int i = 0; i < StringInput.size(); i++) {
+                                                if (StringInput.at(i) == '?') {
+                                                    QuesCount++;
+                                                }
+                                            }
+                                            if (QuesCount < 2) {
+                                                string temp2(1, (char)tolower(temp[0]));
+                                                StringInput.erase(StringInput.begin() + StringInput.size() - 1);
+                                                StringInput.append(temp2);
+                                                StringInput.append("|");
+                                            }
+                                        }
+                                        else if (StringInput.size() == 1) {
+                                            string temp2(1, (char)toupper(temp[0]));
+                                            StringInput.erase(StringInput.begin() + StringInput.size() - 1);
+                                            StringInput.append(temp2);
+                                            StringInput.append("|");
+                                        }
+                                        else if (StringInput.size() == 15) {
+                                            if (event.text.unicode == 63 && StringInput.size() != 15) {
+                                                //check if 2 '?' limit reached
+                                                int QuesCount = 0;
+                                                for (int i = 0; i < StringInput.size(); i++) {
+                                                    if (StringInput.at(i) == '?') {
+                                                        QuesCount++;
+                                                    }
+                                                }
+                                                if (QuesCount < 2) {
+                                                    string temp2(1, (char)tolower(temp[0]));
+                                                    StringInput.erase(StringInput.begin() + StringInput.size() - 1);
+                                                    StringInput.append(temp2);
+                                                }
+                                            }
+                                            else {
+                                                string temp2(1, (char)tolower(temp[0]));
+                                                StringInput.erase(StringInput.begin() + StringInput.size() - 1);
+                                                StringInput.append(temp2);
+                                            }
+                                        }
+                                        else {
+                                            string temp2(1, (char)tolower(temp[0]));
+                                            StringInput.erase(StringInput.begin() + StringInput.size() - 1);
+                                            StringInput.append(temp2);
+                                            StringInput.append("|");
+                                        }
+
+                                    }
+                                }
+                                break;
+                            }
+                        }
                         if (event.type == sf::Event::MouseButtonPressed) {
                             //Checks for left click
                             if (event.mouseButton.button == sf::Mouse::Left) {
@@ -145,10 +234,10 @@ int main()
                                 auto mouseY = event.mouseButton.y;
 
                                 //checks if generate button is pressed
-                                if (mouseX > BeginButton.getPosition().x - BeginButton.getTexture()->getSize().x / 2
-                                    && mouseX < BeginButton.getPosition().x + BeginButton.getTexture()->getSize().x - BeginButton.getTexture()->getSize().x / 2
-                                    && mouseY > BeginButton.getPosition().y - BeginButton.getTexture()->getSize().y / 2
-                                    && mouseY < BeginButton.getPosition().y + BeginButton.getTexture()->getSize().y - BeginButton.getTexture()->getSize().y / 2) {
+                                if (mouseX > GenerateButton.getPosition().x - GenerateButton.getTexture()->getSize().x / 2
+                                    && mouseX < GenerateButton.getPosition().x + GenerateButton.getTexture()->getSize().x - GenerateButton.getTexture()->getSize().x / 2
+                                    && mouseY > GenerateButton.getPosition().y - GenerateButton.getTexture()->getSize().y / 2
+                                    && mouseY < GenerateButton.getPosition().y + GenerateButton.getTexture()->getSize().y - GenerateButton.getTexture()->getSize().y / 2) {
 
                                     //Read in input string (limit 15 characters as that is the max size of the board, ? entered for wild cards)
 
@@ -165,40 +254,43 @@ int main()
                                     //look through each character of string
                                     for (auto i = 0; i < PossibleWordsText1.getString().getSize(); i++) {
                                         if (PossibleWordsText1.findCharacterPos(i).x >= (PossibleWords.getPosition().x + PossibleWords.getTexture()->getSize().x - PossibleWords.getTexture()->getSize().x / 2)-400) {
-                                           
                                             if (i - 1 == '\t') {
                                                 TempGenTest.insert(i - 1, "\n\n");
                                                 PossibleWordsText1.setString(TempGenTest);
                                             }
                                             else {
                                                 while (TempGenTest.at(i - 1) != '\t') {
-                                                    
                                                     i--;
                                                 }
                                                 TempGenTest.insert(i, "\n\n");
                                                 PossibleWordsText1.setString(TempGenTest);
-                                              
                                             }
-                                            
                                         }
                                     }
                                     
                                     setText(PossibleWordsText1, Width / 2.0f + 35, Height / 2.0f - 130);
-                                    
-
-
-
 
                                 }
                                
                             }
                         }
+
                         MainWindow.clear(sf::Color::White);
                         MainWindow.draw(GenerateButton);
                         MainWindow.draw(PossibleWords);
                         MainWindow.draw(MainScreenInstructionText);
                         MainWindow.draw(TextBox);
                         MainWindow.draw(PossibleWordsText1);
+                        MainWindow.draw(MainScreenLimitText);
+
+                        sf::Text inputText;
+                        inputText.setFont(welcomeScreenFont);
+                        inputText.setString(StringInput);
+                        inputText.setCharacterSize(18);
+                        inputText.setFillColor(sf::Color::Black);
+                        inputText.setStyle(sf::Text::Bold);
+                        setText(inputText, Width / 2.0f, Height / 2.0f + 200);
+                        MainWindow.draw(inputText);
                         MainWindow.display();
                     }
                 }

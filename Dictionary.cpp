@@ -7,13 +7,17 @@
 #include "Dictionary.h"
 
 Dictionary::Dictionary() {
-    std::string fileName = "words_alpha.txt";
-    if (!loadDictionary(fileName)) {
-        std::cout << fileName << " file not found" << std::endl;
+    if (!loadDictionary("files/Dictionary.txt")) {
+        std::cout << "files/Dictionary.txt" << " file not found" << std::endl;
+    }
+    else {
+        loadDictionary("files/Dictionary.txt");
     }
 }
 
 bool Dictionary::loadDictionary(string fileName) {
+    string line;
+    char key;
     ifstream file;
     file.open(fileName);
 
@@ -22,8 +26,11 @@ bool Dictionary::loadDictionary(string fileName) {
     }
 
     // todo: load words to dictionary variable
-
-    return true;
+    while (getline(file, line)) {
+        key = line[0];
+        dictionary[key].push_back(line);
+    }
+    return true; 
 }
 
 bool Dictionary::find(const string& word) {
