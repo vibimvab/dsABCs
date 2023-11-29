@@ -22,9 +22,9 @@ std::set<std::string> getHighestWords(const std::string& lettersInput, const Dic
     while (!stack.empty() && !flag) {
         // for each iteration, find the highest scoring word in dictionary
         // if the word is found, set flag. iterate only with the words with the same score
-        score = stack.rbegin()->first; // starting from back (the highest score)
+        score = stack.rbegin()->first; // starting from back (the highest scoring word)
         for (std::string word: stack.at(score)) {
-            heapsAlgorithm(word.size(), word, result, dict);
+            heapsAlgorithm(word.size(), word, result, dict); // change this line to another algorithm
             if (!result.empty()) // if a word exists in dictionary
                 flag = true;
 
