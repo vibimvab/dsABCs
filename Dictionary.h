@@ -16,17 +16,13 @@ private:
     // group the words by its starting letter
     map<char, vector<string>> dictionary;
 
-    bool loadDictionary(string fileName);
+    bool loadDictionary(const string& fileName);
 
 public:
     // constructor
     Dictionary();
 
-    // pass a word
     bool find(const string& word);
-    // pass sorted vector of words
-    // this function might be more useful than "bool find(string)"
-    vector<string> find(const vector<string>& words);
 };
 
 

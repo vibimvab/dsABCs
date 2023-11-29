@@ -9,13 +9,10 @@
 Dictionary::Dictionary() {
     if (!loadDictionary("files/Dictionary.txt")) {
         std::cout << "files/Dictionary.txt" << " file not found" << std::endl;
-    }
-    else {
-        loadDictionary("files/Dictionary.txt");
-    }
+    } // else loadDictionary("files/Dictionary.txt") is unnecessary already ran in if statement
 }
 
-bool Dictionary::loadDictionary(string fileName) {
+bool Dictionary::loadDictionary(const string& fileName) {
     string line;
     char key;
     ifstream file;
@@ -25,7 +22,7 @@ bool Dictionary::loadDictionary(string fileName) {
         return false;
     }
 
-    // todo: load words to dictionary variable
+    // load words to dictionary variable
     while (getline(file, line)) {
         key = line[0];
         dictionary[key].push_back(line);
@@ -36,9 +33,4 @@ bool Dictionary::loadDictionary(string fileName) {
 bool Dictionary::find(const string& word) {
     // todo: implement
     return false;
-}
-
-vector<string> Dictionary::find(const vector<string>& words) {
-    // todo: implement
-    return vector<string>();
 }

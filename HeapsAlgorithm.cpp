@@ -12,13 +12,13 @@ void heapsAlgorithm(const string& inputLetters, std::set<std::string>& result);
 std::set<std::string> getHighestWords(const std::string& letters, const Dictionary& dict) {
     std::set<std::string> result;
 
-    std::map<int, std::set<std::string>> stack; // not actually a stack but works similar
+    std::map<int, std::set<std::string>*> stack; // not actually a stack but works similar
 
     // iteration starts with word with all letters
     int score = Word::evaluateWord(letters);
     bool flag = false;
-    stack.emplace(score, std::set<std::string>());
-    stack.at(score).emplace(letters);
+    stack.emplace(score, new std::set<std::string>());
+    stack.at(score)->emplace(letters);
 
     while (!stack.empty() && !flag) {
         // for each iteration, find the highest scoring word in dictionary
@@ -26,12 +26,22 @@ std::set<std::string> getHighestWords(const std::string& letters, const Dictiona
         score = stack.rbegin()->first; // starting from back (the highest score)
         for (std::string word: stack.at(score)) {
             heapsAlgorithm(word, result);
-            if (!result.empty()) { // if a word is found
+            if (!result.empty()) // if a word exists in dictionary
                 flag = true;
-            }
 
             if (!flag) {
-                // todo: add next word
+                // add next word
+                std::string wordToAdd;
+                for (int i = 0; i < word.size()-1; i++) {
+                    newWord = word.substr(0, i) + word.substr(i+1, word.size()-i-1);
+                    newWordScore = Word::evaluateWord(newWord);
+                    if (stack.find(newWordScore) == stack.end()) {
+                        // key not found (word with that score does not exist in stack)
+                        stack.emplace(newWordScore, new std::set<std::string>());
+                    }
+
+                    stack.at(newWordScore)->emplace(newWord);
+                }
             }
         }
 
