@@ -5,15 +5,14 @@
 #include <set>
 #include <map>
 
-std::set<std::string> getHighestWords(const std::string& letters, const Dictionary& dict);
-void heapsAlgorithm(const string& inputLetters, std::set<std::string>& result);
+std::set<std::string> getHighestWords(const std::string& lettersInput, const Dictionary& dict);
+void heapsAlgorithm(const int n, string& word, std::set<std::string>& result, const Dictionary& dict);
 
+std::set<std::string> getHighestWords(const std::string& lettersInput, const Dictionary& dict) {
+    std::string letters(lettersInput.begin(), lettersInput.end()); // local copy of letters to pass to functions
+    std::set<std::string> result; // return set
 
-std::set<std::string> getHighestWords(const std::string& letters, const Dictionary& dict) {
-    std::set<std::string> result;
-
-    std::map<int, std::set<std::string>*> stack; // not actually a stack but works similar
-
+    std::map<int, std::set<std::string>*> stack; // not actually a stack but works similarly
     // iteration starts with word with all letters
     int score = Word::evaluateWord(letters);
     bool flag = false;
@@ -25,7 +24,7 @@ std::set<std::string> getHighestWords(const std::string& letters, const Dictiona
         // if the word is found, set flag. iterate only with the words with the same score
         score = stack.rbegin()->first; // starting from back (the highest score)
         for (std::string word: stack.at(score)) {
-            heapsAlgorithm(word, result);
+            heapsAlgorithm(word.size(), word, result, dict);
             if (!result.empty()) // if a word exists in dictionary
                 flag = true;
 
@@ -51,11 +50,26 @@ std::set<std::string> getHighestWords(const std::string& letters, const Dictiona
     return result;
 }
 
-std::string swap(std::string originalStr, int index1, int index2) {
-    return "";
-}
+void heapsAlgorithm(const int n, string& word, std::set<std::string>& result, const Dictionary& dict) {
+    // referred to wikipedia: https://en.wikipedia.org/wiki/Heap%27s_algorithm
+    if (n == 1) {
+        if (dict.find(word))
+            result.emplace(word);
+    }
+    else {
+        // Generate permutations with n-th unaltered
+        // Initially n = length(word)
+        heapsAlgorithm(length-1, word, result, dict);
 
-std::vector<std::string> heapsAlgorithm(const std::vector<char>& inputLetters) {
-    std::string letters(inputLetters.begin(), inputLetters.end());
-
+        // Generate permutations for n-th swapped with each n-1 initial
+        for (int i = 0; i < n-1; i++) {
+            // Swap choice dependent on parity of n (even or odd)
+            if (n % 2 == 0) {
+                std::swap(word[i], word[n-1]);
+            } else {
+                std::swap(word[0], word[n-1]);
+            }
+            heapsAlgorithm(n-1, word, result, dict);
+        }
+    }
 }
