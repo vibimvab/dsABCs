@@ -14,7 +14,7 @@ using namespace std;
 class Dictionary {
 private:
     // group the words by its starting letter
-    map<char, vector<string>> dictionary;
+    map<char, set<string>> dictionary;
 
     bool loadDictionary(const string& fileName);
 

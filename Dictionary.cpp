@@ -13,7 +13,7 @@ Dictionary::Dictionary() {
 }
 
 bool Dictionary::loadDictionary(const string& fileName) {
-    string line;
+    std::string line;
     char key;
     ifstream file;
     file.open(fileName);
@@ -25,12 +25,11 @@ bool Dictionary::loadDictionary(const string& fileName) {
     // load words to dictionary variable
     while (getline(file, line)) {
         key = line[0];
-        dictionary[key].push_back(line);
+        this->dictionary[key].insert(line);
     }
     return true; 
 }
 
 bool Dictionary::find(const string& word) {
-    // todo: implement
-    return false;
+    return this->dictionary.at(word.at(0)).find(word) != this->dictionary.at(word.at(0)).end();
 }
