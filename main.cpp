@@ -25,7 +25,7 @@ void setSprite(sf::Sprite& text, float x, float y) {
 
 int main()
 {
-    //Load up dictonary & store for later comparison
+    //Load up dictionary & store for later comparison
     Dictionary dictionary;
      //Text input for main screen
     string StringInput = "|";
@@ -35,7 +35,7 @@ int main()
     bool WelcomeScreenOpen = true;
 
     sf::RenderWindow welcomeScreenWindow(sf::VideoMode(Width, Height), "dsABC's", sf::Style::Close);
-    //the welcome screend font set-up
+    //the welcome screen font set-up
     sf::Font welcomeScreenFont;
     welcomeScreenFont.loadFromFile("files/orange juice 2.0.ttf");
     sf::Text welcomeScreenTextLine1;
@@ -142,7 +142,7 @@ int main()
                     }
                 }
             }
-            //if welcome screne not true then this displays main window
+            //if welcome screen not true then this displays main window
             if (!WelcomeScreenOpen) {
                 sf::RenderWindow MainWindow(sf::VideoMode(Width, Height), "dsABC's", sf::Style::Close);
 
@@ -163,7 +163,7 @@ int main()
                                     StringInput.append("|");
                                 }
                                 else if (StringInput.size() == 1) {
-                                    //do nothing when no letters have been inputed yet (don't delete cursor)
+                                    //do nothing when no letters have been input yet (don't delete cursor)
                                 }
                                 else {
                                     //any other circumstance
@@ -246,7 +246,7 @@ int main()
 
                                     //Read in input string (limit 15 characters as that is the max size of the board, ? entered for wild cards)
 
-                                    //Call generator functions highest scoring letters are returned as a single string with delimiter '|' used between each word
+                                    //Call generator functions the highest scoring letters are returned as a single string with delimiter '|' used between each word
                                     //please format string like so: "ADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)" so it can be displayed properly
 
                                     string TempGenTest = "ADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)\t\tADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)";
