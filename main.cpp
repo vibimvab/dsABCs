@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Dictionary.h"
+#include "Algorithm.cpp"
 #include <iostream>
 #include <fstream>
 #include <string>

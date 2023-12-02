@@ -1,7 +1,3 @@
-//
-// Created by Insung Seo on 11/27/23.
-//
-
 #ifndef DATASTRUCTURES_DICTIONARY_H
 #define DATASTRUCTURES_DICTIONARY_H
 

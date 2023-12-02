@@ -1,7 +1,3 @@
-//
-// Created by Insung Seo on 11/27/23.
-//
-
 #include <fstream>
 #include <iostream>
 #include "Dictionary.h"
