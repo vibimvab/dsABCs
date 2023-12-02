@@ -30,6 +30,6 @@ bool Dictionary::loadDictionary(const string& fileName) {
     return true; 
 }
 
-bool Dictionary::find(const string& word) {
+bool Dictionary::find(const string& word) const {
     return this->dictionary.at(word.at(0)).find(word) != this->dictionary.at(word.at(0)).end();
 }

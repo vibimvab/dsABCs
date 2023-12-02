@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <set>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ public:
     // constructor
     Dictionary();
 
-    bool find(const string& word);
+    bool find(const string& word) const;
 };
 
 

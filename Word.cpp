@@ -1,6 +1,6 @@
 #include "Word.h"
 
-int Word::evaluateWord(std::string word) {
+int Word::evaluateWord(const std::string& word) {
     int score = 0;
     for (char c: word) {
         score += letterScore.at(c);
