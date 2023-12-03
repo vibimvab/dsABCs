@@ -48,7 +48,7 @@ class Word {
     };
 
 public:
-    static int evaluateWord(std::string word);
+    int evaluateWord(const std::string& word);
 };
 
 

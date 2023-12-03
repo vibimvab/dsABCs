@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
+#include "Algorithm.h"
 #include "Dictionary.h"
 #include <iostream>
 #include <fstream>
-#include <string>
 using namespace std;
 
 //fonts sourced from www.1001freefonts.com
@@ -25,8 +25,7 @@ void setSprite(sf::Sprite& text, float x, float y) {
 
 int main()
 {
-    //Load up dictionary & store for later comparison
-    Dictionary dictionary;
+   
      //Text input for main screen
     string StringInput = "|";
 
@@ -193,7 +192,7 @@ int main()
                                             }
                                         }
                                         else if (StringInput.size() == 1) {
-                                            string temp2(1, (char)toupper(temp[0]));
+                                            string temp2(1, (char)tolower(temp[0]));
                                             StringInput.erase(StringInput.begin() + StringInput.size() - 1);
                                             StringInput.append(temp2);
                                             StringInput.append("|");
@@ -249,26 +248,43 @@ int main()
                                     //Call generator functions the highest scoring letters are returned as a single string with delimiter '|' used between each word
                                     //please format string like so: "ADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)" so it can be displayed properly
 
-                                    string TempGenTest = "ADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)\t\tADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)";
+                                   
+                                     //Load up dictionary & store for later comparison
+                                    Dictionary dictionary;
+                                    int size = StringInput.size() - 1;
+                                    if (StringInput.at(size) == '|') {
+                                        StringInput = StringInput.substr(0, size);
+                                    }
+                                    
+                                    set<string> TempGenTest = getHighestWords(StringInput, dictionary);
+
+                                    string StringFormat = "";
+                                   // set<string>::iterator itr;
+                                    /*
+                                    for (itr = TempGenTest.begin(); itr != TempGenTest.end(); itr++){
+                                        StringFormat += *itr ;
+                                    }
+                                    */
+                                        //"ADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)\t\tADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)";
 
                                     //Wrap string in box can handle max three lines ish
                                     
-                                    PossibleWordsText1.setString(TempGenTest);
+                                    PossibleWordsText1.setString(StringFormat);
                                     setText(PossibleWordsText1, Width / 2.0f, Height / 2.0f - 150);
 
                                     //look through each character of string
                                     for (auto i = 0; i < PossibleWordsText1.getString().getSize(); i++) {
                                         if (PossibleWordsText1.findCharacterPos(i).x >= (PossibleWords.getPosition().x + PossibleWords.getTexture()->getSize().x - PossibleWords.getTexture()->getSize().x / 2)-400) {
                                             if (i - 1 == '\t') {
-                                                TempGenTest.insert(i - 1, "\n\n");
-                                                PossibleWordsText1.setString(TempGenTest);
+                                                StringFormat.insert(i - 1, "\n\n");
+                                                PossibleWordsText1.setString(StringFormat);
                                             }
                                             else {
-                                                while (TempGenTest.at(i - 1) != '\t') {
+                                                while (StringFormat.at(i - 1) != '\t') {
                                                     i--;
                                                 }
-                                                TempGenTest.insert(i, "\n\n");
-                                                PossibleWordsText1.setString(TempGenTest);
+                                                StringFormat.insert(i, "\n\n");
+                                                PossibleWordsText1.setString(StringFormat);
                                             }
                                         }
                                     }
