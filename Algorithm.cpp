@@ -1,12 +1,7 @@
-#include "Word.h"
-#include "Dictionary.h"
-#include <vector>
-#include <string>
-#include <set>
-#include <map>
+#include "Algorithm.h"
 
-std::set<std::string> getHighestWords(const std::string& lettersInput, const Dictionary& dict);
-void heapsAlgorithm(const int n, string& word, std::set<std::string>& result, const Dictionary& dict);
+
+
 
 std::set<std::string> getHighestWords(const std::string& lettersInput, const Dictionary& dict) {
     std::string letters(lettersInput.begin(), lettersInput.end()); // local copy of letters to pass to functions
