@@ -73,19 +73,11 @@ int main()
 
     sf::Text MainScreenInstructionText;
     MainScreenInstructionText.setFont(welcomeScreenFont);
-    MainScreenInstructionText.setString("Enter up to 15 characters, using the ? symbol for wild card tiles");
+    MainScreenInstructionText.setString("Enter up to 10 characters");
     MainScreenInstructionText.setCharacterSize(30);
     MainScreenInstructionText.setFillColor(sf::Color::Black);
     MainScreenInstructionText.setStyle(sf::Text::Bold);
     setText(MainScreenInstructionText, Width / 2.0f, Height / 2.0f + 140);
-
-    sf::Text MainScreenLimitText;
-    MainScreenLimitText.setFont(welcomeScreenFont);
-    MainScreenLimitText.setString("*Use of ? limited to 2*");
-    MainScreenLimitText.setCharacterSize(20);
-    MainScreenLimitText.setFillColor(sf::Color::Black);
-    MainScreenLimitText.setStyle(sf::Text::Bold);
-    setText(MainScreenLimitText, Width / 2.0f + 200, Height / 2.0f + 250);
 
     sf::Text PossibleWordsText1;
     PossibleWordsText1.setFont(welcomeScreenFont);
@@ -167,7 +159,7 @@ int main()
                             switch (event.key.code) {
                                 //keycode for backspace is 8
                             case 8:
-                                if (StringInput[StringInput.size() - 1] != '|' && StringInput.size() == 15) {
+                                if (StringInput[StringInput.size() - 1] != '|' && StringInput.size() == 10) {
                                     //if at max capacity and trying to delete
                                     StringInput.erase(StringInput.begin() + StringInput.size() - 1);
                                     StringInput.append("|");
@@ -182,52 +174,20 @@ int main()
                                 break;
                             default:
                                 string temp;
-                                if (StringInput.size() < 16) {
-                                    
+                                if (StringInput.size() < 11) {
                                     if (((event.text.unicode > 64) && (event.text.unicode < 91))
-                                        || ((event.text.unicode > 96) && (event.text.unicode < 123)) || (event.text.unicode == 63)) {
+                                        || ((event.text.unicode > 96) && (event.text.unicode < 123))) {
                                         temp += static_cast<char>(event.text.unicode);
-                                        if (event.text.unicode == 63 && StringInput.size() != 15) {
-                                            //check if 2 '?' limit reached
-                                            int QuesCount = 0;
-                                            for (int i = 0; i < StringInput.size(); i++) {
-                                                if (StringInput.at(i) == '?') {
-                                                    QuesCount++;
-                                                }
-                                            }
-                                            if (QuesCount < 2) {
-                                                string temp2(1, (char)tolower(temp[0]));
-                                                StringInput.erase(StringInput.begin() + StringInput.size() - 1);
-                                                StringInput.append(temp2);
-                                                StringInput.append("|");
-                                            }
-                                        }
-                                        else if (StringInput.size() == 1) {
+                                        if (StringInput.size() == 1) {
                                             string temp2(1, (char)tolower(temp[0]));
                                             StringInput.erase(StringInput.begin() + StringInput.size() - 1);
                                             StringInput.append(temp2);
                                             StringInput.append("|");
                                         }
-                                        else if (StringInput.size() == 15) {
-                                            if (event.text.unicode == 63 && StringInput.size() != 15) {
-                                                //check if 2 '?' limit reached
-                                                int QuesCount = 0;
-                                                for (int i = 0; i < StringInput.size(); i++) {
-                                                    if (StringInput.at(i) == '?') {
-                                                        QuesCount++;
-                                                    }
-                                                }
-                                                if (QuesCount < 2) {
-                                                    string temp2(1, (char)tolower(temp[0]));
-                                                    StringInput.erase(StringInput.begin() + StringInput.size() - 1);
-                                                    StringInput.append(temp2);
-                                                }
-                                            }
-                                            else {
+                                        else if (StringInput.size() == 10) {
                                                 string temp2(1, (char)tolower(temp[0]));
                                                 StringInput.erase(StringInput.begin() + StringInput.size() - 1);
                                                 StringInput.append(temp2);
-                                            }
                                         }
                                         else {
                                             string temp2(1, (char)tolower(temp[0]));
@@ -253,6 +213,7 @@ int main()
                                     && mouseX < GenerateButton.getPosition().x + GenerateButton.getTexture()->getSize().x - GenerateButton.getTexture()->getSize().x / 2
                                     && mouseY > GenerateButton.getPosition().y - GenerateButton.getTexture()->getSize().y / 2
                                     && mouseY < GenerateButton.getPosition().y + GenerateButton.getTexture()->getSize().y - GenerateButton.getTexture()->getSize().y / 2) {
+                                    cout << StringInput.size();
                                     if(StringInput.size() > 0) {
                                         //Read in input string (limit 15 characters as that is the max size of the board, ? entered for wild cards)
 
@@ -302,8 +263,12 @@ int main()
                                                     }
                                                 }
                                             }
-                                            setText(PossibleWordsText1, Width / 2.0f + 35, Height / 2.0f - 130);
+                                        } else{
+                                            PossibleWordsText1.setString("Nothing Found");
                                         }
+                                        setText(PossibleWordsText1, Width / 2.0f + 35, Height / 2.0f - 130);
+
+
                                     }
                                     StringInput += "|";
                                 }
@@ -318,7 +283,6 @@ int main()
                         MainWindow.draw(MainScreenInstructionText);
                         MainWindow.draw(TextBox);
                         MainWindow.draw(PossibleWordsText1);
-                        MainWindow.draw(MainScreenLimitText);
 
                         sf::Text inputText;
                         inputText.setFont(welcomeScreenFont);
