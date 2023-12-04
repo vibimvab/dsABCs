@@ -1,6 +1,6 @@
 #include "Algorithm.h"
 
-std::set<std::string> getHighestWords(const std::string& lettersInput, const Dictionary& dict) {
+std::set<std::string> getHighestWordsHeaps(const std::string& lettersInput, const Dictionary& dict) {
 //    if (lettersInput.empty()) {
 //        return {};
 //    }

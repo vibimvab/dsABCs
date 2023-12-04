@@ -5,5 +5,5 @@
 #include <set>
 #include <map>
 
-std::set<std::string> getHighestWords(const std::string& lettersInput, const Dictionary& dict);
+std::set<std::string> getHighestWordsHeaps(const std::string& lettersInput, const Dictionary& dict);
 void heapsAlgorithm(const int n, string& word, std::set<std::string>& result, const Dictionary& dict);

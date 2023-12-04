@@ -229,18 +229,18 @@ int main()
                                         }
 
                                         start = clock(); // calculating time
-                                        set<string> TempGenTest = getHighestWords(StringInput, dictionary);
+                                        set<string> highestWords = getHighestWordsHeaps(StringInput, dictionary);
                                         finish = clock();
                                         duration = (double)(finish - start) / 1000000;
                                         cout << duration << "s" << endl;
 
                                         string StringFormat = "";
                                         Word w;
-                                        if(TempGenTest.size() != 0 ) {
-                                            int score = w.evaluateWord(*TempGenTest.begin());
+                                        if(highestWords.size() != 0 ) {
+                                            int score = w.evaluateWord(*highestWords.begin());
                                             // set<string>::iterator itr;
-                                            for (auto itr = TempGenTest.begin(); itr != TempGenTest.end(); itr++) {
-                                                StringFormat += *itr + " (" + to_string(score) + ")\t\t";
+                                            for (const auto & itr : highestWords) {
+                                                StringFormat += itr + " (" + to_string(score) + ")\t\t";
                                             }
 
                                             // Wrap string in box can handle max three lines ish
