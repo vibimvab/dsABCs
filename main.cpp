@@ -125,6 +125,7 @@ int main()
     TextBox.setTexture(TextBoxTexture);
     setSprite(TextBox, Width / 2.0f, Height / 2.0f + 195);
 
+    Dictionary dictionary;
 
     while (welcomeScreenWindow.isOpen()) {
         sf::Event event;
@@ -259,14 +260,8 @@ int main()
                                     //please format string like so: "ADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)" so it can be displayed properly
 
                                    
-                                     //Load up dictionary & store for later comparison
-                                    Dictionary dictionary;
-                                    int size = StringInput.size() - 1;
-                                    if (StringInput.at(size) == '|') {
-                                        StringInput = StringInput.substr(0, size);
-                                    }
-                                    
-                                    set<string> TempGenTest = getHighestWords(StringInput, dictionary);
+                                    // Load up dictionary & store for later comparison
+                                    set<string> TempGenTest = getHighestWords(StringInput.substr(0, StringInput.size()-1), dictionary);
 
                                     string StringFormat = "";
                                     Word w;
