@@ -19,7 +19,7 @@
 using namespace std;
 
 
-class DataStruct {
+class Asif {
 private:
     vector<vector<string>> Asif(int num, const vector<string> &vec) {  //the asif algorithm
         //this algorithm takes in a vector of characters and the number that we want to use for combinations
@@ -110,9 +110,6 @@ private:
         correctVals= finalReturn(mapOfScrabble, highestValue);
         return correctVals;
     }
-public:
-
-
     vector<string> allAsif(const vector<string> &vec){  //this is the function that will be called
         vector<string> finalList;
         vector<string> iterator;
@@ -133,10 +130,17 @@ public:
         vector1 = finalResult[highestValue];
         return vector1;
     }
-
-
-
-
+public:
+    vector<string> AsifCallFunction(string &s){
+        string iter="";
+        vector<string> concat;
+        for (int i = 0; i < s.length(); ++i) {
+            iter = s.substr(i,1);
+            concat.push_back(iter);
+        }
+        vector<string > ret = allAsif(concat);
+        return ret;
+    }
 
 };
 
