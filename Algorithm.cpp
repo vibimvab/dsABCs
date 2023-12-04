@@ -1,6 +1,10 @@
 #include "Algorithm.h"
 
 std::set<std::string> getHighestWords(const std::string& lettersInput, const Dictionary& dict) {
+//    if (lettersInput.empty()) {
+//        return {};
+//    }
+
     std::string letters(lettersInput.begin(), lettersInput.end()); // local copy of letters to pass to functions
     std::set<std::string> result; // return set
 
@@ -9,22 +13,24 @@ std::set<std::string> getHighestWords(const std::string& lettersInput, const Dic
     Word letterSet;
     int score = letterSet.evaluateWord(letters);
     bool wordFound = false;
-    std::string tempWord;
+    std::string tempWord; // copy of word
     stack.emplace(score, new std::set<std::string>());
     stack.at(score)->emplace(letters);
 
-    while (!stack.empty() && !wordFound) {
+    while (!wordFound) {
         // for each iteration, find the highest scoring word in dictionary
         // if the word is found, set wordFound. iterate only with the words with the same score
-        score = stack.rbegin()->first; // starting from back (the highest scoring word)
-        for (std::string word: *stack.at(score)) {
+        score = stack.rbegin()->first; // starting from back (the highest scoring letter set)
+        if (score == 0) break; // if the stack is empty except for empty string
+
+        for (const std::string& word: *stack.at(score)) {
             tempWord = word;
-            heapsAlgorithm((int)word.size(), tempWord, result, dict); // change this line to another algorithm
+            heapsAlgorithm((int)word.size(), tempWord, result, dict);
             if (!result.empty()) // if a word exists in dictionary
                 wordFound = true;
 
             if (!wordFound) {
-                // add next word
+                // add next words to stack, no need to add if a word is found
                 std::string wordToAdd;
                 for (int i = 0; i < word.size(); i++) {
                     auto newWord = word.substr(0, i) + word.substr(i+1, word.size()-i-1);
