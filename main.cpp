@@ -119,6 +119,9 @@ int main()
 
     // declare dictionary here to do the expensive work (load dictionary) only once
     Dictionary dictionary;
+    // variables to track running time of the algorithms
+    clock_t start, finish;
+    double duration;
 
     while (welcomeScreenWindow.isOpen()) {
         sf::Event event;
@@ -214,7 +217,7 @@ int main()
                                     && mouseX < GenerateButton.getPosition().x + GenerateButton.getTexture()->getSize().x - GenerateButton.getTexture()->getSize().x / 2
                                     && mouseY > GenerateButton.getPosition().y - GenerateButton.getTexture()->getSize().y / 2
                                     && mouseY < GenerateButton.getPosition().y + GenerateButton.getTexture()->getSize().y - GenerateButton.getTexture()->getSize().y / 2) {
-                                    cout << StringInput.size();
+                                    // cout << StringInput.size();
                                     if(StringInput.size() > 0) {
                                         //Read in input string (limit 10 characters)
                                         //Call generator functions the highest scoring letters are returned as a set of string
@@ -225,7 +228,11 @@ int main()
                                             StringInput = StringInput.substr(0, size);
                                         }
 
+                                        start = clock(); // calculating time
                                         set<string> TempGenTest = getHighestWords(StringInput, dictionary);
+                                        finish = clock();
+                                        duration = (double)(finish - start) / 1000000;
+                                        cout << duration << "s" << endl;
 
                                         string StringFormat = "";
                                         Word w;

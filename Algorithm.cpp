@@ -46,7 +46,6 @@ std::set<std::string> getHighestWords(const std::string& lettersInput, const Dic
         }
 
         stack.erase(score);
-        score = stack.rbegin()->first; // starting from back (the highest scoring word)
     }
 
     return result;
