@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Algorithm.h"
 #include "Dictionary.h"
+#include "Word.h"
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -36,7 +37,7 @@ int main()
     sf::RenderWindow welcomeScreenWindow(sf::VideoMode(Width, Height), "dsABC's", sf::Style::Close);
     //the welcome screen font set-up
     sf::Font welcomeScreenFont;
-    welcomeScreenFont.loadFromFile("files/orange juice 2.0.ttf");
+    welcomeScreenFont.loadFromFile("files/orange juice 2.0.ttf"); // replace the string to ../files/orange juice 2.0.ttf to run with CMake
     sf::Text welcomeScreenTextLine1;
     welcomeScreenTextLine1.setFont(welcomeScreenFont);
     welcomeScreenTextLine1.setString("Welcome to");
@@ -90,27 +91,27 @@ int main()
     //Make sprites (buttons)
     sf::Sprite BeginButton;
     sf::Texture BeginButtonTexture;
-    BeginButtonTexture.loadFromFile("files/images/BeginButton.png");
+    BeginButtonTexture.loadFromFile("files/images/BeginButton.png"); // replace the string to ../files/images/BeginButton.png to run with CMake
     BeginButton.setTexture(BeginButtonTexture);
     setSprite(BeginButton, Width / 2.0f, Height / 2.0f + 50 + 50 + 140);
     sf::Sprite GenerateButton;
     sf::Texture GenerateButtonTexture;
-    GenerateButtonTexture.loadFromFile("files/images/GenerateButton.png");
+    GenerateButtonTexture.loadFromFile("files/images/GenerateButton.png"); // replace the string to ../files/images/GenerateButton.png to run with CMake
     GenerateButton.setTexture(GenerateButtonTexture);
     setSprite(GenerateButton, Width / 2.0f, Height / 2.0f + 50 + 50 + 200);
     sf::Sprite Background;
     sf::Texture BackgroundTexture;
-    BackgroundTexture.loadFromFile("files/images/Background.png");
+    BackgroundTexture.loadFromFile("files/images/Background.png"); // replace the string to ../files/images/Background.png to run with CMake
     Background.setTexture(BackgroundTexture);
     setSprite(Background, Width / 2.0f, Height / 2.0f);
     sf::Sprite PossibleWords;
     sf::Texture PossibleWordsTexture;
-    PossibleWordsTexture.loadFromFile("files/images/PossibleWord.png");
+    PossibleWordsTexture.loadFromFile("files/images/PossibleWord.png"); // replace the string to ../files/images/PossibleWord.png to run with CMake
     PossibleWords.setTexture(PossibleWordsTexture);
     setSprite(PossibleWords, Width / 2.0f, Height / 2.0f - 140);
     sf::Sprite TextBox;
     sf::Texture TextBoxTexture;
-    TextBoxTexture.loadFromFile("files/images/TextBox.png");
+    TextBoxTexture.loadFromFile("files/images/TextBox.png"); // replace the string to ../files/images/TextBox.png to run with CMake
     TextBox.setTexture(TextBoxTexture);
     setSprite(TextBox, Width / 2.0f, Height / 2.0f + 195);
 
@@ -259,15 +260,15 @@ int main()
                                     set<string> TempGenTest = getHighestWords(StringInput, dictionary);
 
                                     string StringFormat = "";
-                                   // set<string>::iterator itr;
-                                    /*
-                                    for (itr = TempGenTest.begin(); itr != TempGenTest.end(); itr++){
-                                        StringFormat += *itr ;
+                                    Word w;
+                                    int score = w.evaluateWord(*TempGenTest.begin());
+                                    // set<string>::iterator itr;
+                                    for (auto itr = TempGenTest.begin(); itr != TempGenTest.end(); itr++){
+                                        StringFormat += *itr + " (" + to_string(score) + ")\t\t";
                                     }
-                                    */
-                                        //"ADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)\t\tADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)";
+                                    //"ADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)\t\tADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)";
 
-                                    //Wrap string in box can handle max three lines ish
+                                    // Wrap string in box can handle max three lines ish
                                     
                                     PossibleWordsText1.setString(StringFormat);
                                     setText(PossibleWordsText1, Width / 2.0f, Height / 2.0f - 150);

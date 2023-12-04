@@ -1,8 +1,5 @@
 #include "Algorithm.h"
 
-
-
-
 std::set<std::string> getHighestWords(const std::string& lettersInput, const Dictionary& dict) {
     std::string letters(lettersInput.begin(), lettersInput.end()); // local copy of letters to pass to functions
     std::set<std::string> result; // return set
@@ -11,23 +8,25 @@ std::set<std::string> getHighestWords(const std::string& lettersInput, const Dic
     // iteration starts with word with all letters
     Word letterSet;
     int score = letterSet.evaluateWord(letters);
-    bool flag = false;
+    bool wordFound = false;
+    std::string tempWord;
     stack.emplace(score, new std::set<std::string>());
     stack.at(score)->emplace(letters);
 
-    while (!stack.empty() && !flag) {
+    while (!stack.empty() && !wordFound) {
         // for each iteration, find the highest scoring word in dictionary
-        // if the word is found, set flag. iterate only with the words with the same score
+        // if the word is found, set wordFound. iterate only with the words with the same score
         score = stack.rbegin()->first; // starting from back (the highest scoring word)
         for (std::string word: *stack.at(score)) {
-            heapsAlgorithm((int)word.size(), word, result, dict); // change this line to another algorithm
+            tempWord = word;
+            heapsAlgorithm((int)word.size(), tempWord, result, dict); // change this line to another algorithm
             if (!result.empty()) // if a word exists in dictionary
-                flag = true;
+                wordFound = true;
 
-            if (!flag) {
+            if (!wordFound) {
                 // add next word
                 std::string wordToAdd;
-                for (int i = 0; i < word.size()-1; i++) {
+                for (int i = 0; i < word.size(); i++) {
                     auto newWord = word.substr(0, i) + word.substr(i+1, word.size()-i-1);
                     auto newWordScore = letterSet.evaluateWord(newWord);
                     if (stack.find(newWordScore) == stack.end()) {
@@ -41,6 +40,7 @@ std::set<std::string> getHighestWords(const std::string& lettersInput, const Dic
         }
 
         stack.erase(score);
+        score = stack.rbegin()->first; // starting from back (the highest scoring word)
     }
 
     return result;
@@ -51,11 +51,12 @@ void heapsAlgorithm(const int n, string& word, std::set<std::string>& result, co
     if (n == 1) {
         if (dict.find(word))
             result.emplace(word);
+        return;
     }
     else {
         // Generate permutations with n-th unaltered
         // Initially n = length(word)
-        heapsAlgorithm((int)word.size()-1, word, result, dict);
+        heapsAlgorithm(n-1, word, result, dict);
 
         // Generate permutations for n-th swapped with each n-1 initial
         for (int i = 0; i < n-1; i++) {
