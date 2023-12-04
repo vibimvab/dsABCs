@@ -253,49 +253,59 @@ int main()
                                     && mouseX < GenerateButton.getPosition().x + GenerateButton.getTexture()->getSize().x - GenerateButton.getTexture()->getSize().x / 2
                                     && mouseY > GenerateButton.getPosition().y - GenerateButton.getTexture()->getSize().y / 2
                                     && mouseY < GenerateButton.getPosition().y + GenerateButton.getTexture()->getSize().y - GenerateButton.getTexture()->getSize().y / 2) {
+                                    if(StringInput.size() > 0) {
+                                        //Read in input string (limit 15 characters as that is the max size of the board, ? entered for wild cards)
 
-                                    //Read in input string (limit 15 characters as that is the max size of the board, ? entered for wild cards)
+                                        //Call generator functions the highest scoring letters are returned as a single string with delimiter '|' used between each word
+                                        //please format string like so: "ADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)" so it can be displayed properly
 
-                                    //Call generator functions the highest scoring letters are returned as a single string with delimiter '|' used between each word
-                                    //please format string like so: "ADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)" so it can be displayed properly
 
-                                   
-                                    // Load up dictionary & store for later comparison
-                                    set<string> TempGenTest = getHighestWords(StringInput.substr(0, StringInput.size()-1), dictionary);
+                                        //Load up dictionary & store for later comparison
+                                        Dictionary dictionary;
+                                        int size = StringInput.size() - 1;
+                                        if (StringInput.at(size) == '|') {
+                                            StringInput = StringInput.substr(0, size);
+                                        }
 
-                                    string StringFormat = "";
-                                    Word w;
-                                    int score = w.evaluateWord(*TempGenTest.begin());
-                                    // set<string>::iterator itr;
-                                    for (auto itr = TempGenTest.begin(); itr != TempGenTest.end(); itr++){
-                                        StringFormat += *itr + " (" + to_string(score) + ")\t\t";
-                                    }
-                                    //"ADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)\t\tADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)";
+                                        set<string> TempGenTest = getHighestWords(StringInput, dictionary);
 
-                                    // Wrap string in box can handle max three lines ish
-                                    
-                                    PossibleWordsText1.setString(StringFormat);
-                                    setText(PossibleWordsText1, Width / 2.0f, Height / 2.0f - 150);
-
-                                    //look through each character of string
-                                    for (auto i = 0; i < PossibleWordsText1.getString().getSize(); i++) {
-                                        if (PossibleWordsText1.findCharacterPos(i).x >= (PossibleWords.getPosition().x + PossibleWords.getTexture()->getSize().x - PossibleWords.getTexture()->getSize().x / 2)-400) {
-                                            if (i - 1 == '\t') {
-                                                StringFormat.insert(i - 1, "\n\n");
-                                                PossibleWordsText1.setString(StringFormat);
+                                        string StringFormat = "";
+                                        Word w;
+                                        if(TempGenTest.size() != 0 ) {
+                                            int score = w.evaluateWord(*TempGenTest.begin());
+                                            // set<string>::iterator itr;
+                                            for (auto itr = TempGenTest.begin(); itr != TempGenTest.end(); itr++) {
+                                                StringFormat += *itr + " (" + to_string(score) + ")\t\t";
                                             }
-                                            else {
-                                                while (StringFormat.at(i - 1) != '\t') {
-                                                    i--;
+                                            //"ADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)\t\tADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)";
+
+                                            // Wrap string in box can handle max three lines ish
+
+                                            PossibleWordsText1.setString(StringFormat);
+                                            setText(PossibleWordsText1, Width / 2.0f, Height / 2.0f - 150);
+
+                                            //look through each character of string
+                                            for (auto i = 0; i < PossibleWordsText1.getString().getSize(); i++) {
+                                                if (PossibleWordsText1.findCharacterPos(i).x >=
+                                                    (PossibleWords.getPosition().x +
+                                                     PossibleWords.getTexture()->getSize().x -
+                                                     PossibleWords.getTexture()->getSize().x / 2) - 400) {
+                                                    if (i - 1 == '\t') {
+                                                        StringFormat.insert(i - 1, "\n\n");
+                                                        PossibleWordsText1.setString(StringFormat);
+                                                    } else {
+                                                        while (StringFormat.at(i - 1) != '\t') {
+                                                            i--;
+                                                        }
+                                                        StringFormat.insert(i, "\n\n");
+                                                        PossibleWordsText1.setString(StringFormat);
+                                                    }
                                                 }
-                                                StringFormat.insert(i, "\n\n");
-                                                PossibleWordsText1.setString(StringFormat);
                                             }
+                                            setText(PossibleWordsText1, Width / 2.0f + 35, Height / 2.0f - 130);
                                         }
                                     }
-                                    
-                                    setText(PossibleWordsText1, Width / 2.0f + 35, Height / 2.0f - 130);
-
+                                    StringInput += "|";
                                 }
                                
                             }

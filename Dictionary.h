@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include <set>
+#include <algorithm>
 #include "Word.h"
 
 using namespace std;
