@@ -1,5 +1,5 @@
-#ifndef DATASTRUCTURES_WORD_H
-#define DATASTRUCTURES_WORD_H
+#ifndef DSABCS_WORD_H
+#define DSABCS_WORD_H
 
 #include <map>
 #include <string>
@@ -52,4 +52,4 @@ public:
 };
 
 
-#endif //DATASTRUCTURES_WORD_H
+#endif //DSABCS_WORD_H

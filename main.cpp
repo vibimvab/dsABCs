@@ -65,7 +65,7 @@ int main()
 
     sf::Text welcomeScreenTextLine4;
     welcomeScreenTextLine4.setFont(welcomeScreenFont);
-    welcomeScreenTextLine4.setString("Emma Mitchell, and Chrystina Woehler");
+    welcomeScreenTextLine4.setString("Chrystina Woehler, and Emma Mitchell");
     welcomeScreenTextLine4.setCharacterSize(50);
     welcomeScreenTextLine4.setFillColor(sf::Color::White);
     welcomeScreenTextLine4.setStyle(sf::Text::Bold);
@@ -117,6 +117,7 @@ int main()
     TextBox.setTexture(TextBoxTexture);
     setSprite(TextBox, Width / 2.0f, Height / 2.0f + 195);
 
+    // declare dictionary here to do the expensive work (load dictionary) only once
     Dictionary dictionary;
 
     while (welcomeScreenWindow.isOpen()) {
@@ -215,14 +216,10 @@ int main()
                                     && mouseY < GenerateButton.getPosition().y + GenerateButton.getTexture()->getSize().y - GenerateButton.getTexture()->getSize().y / 2) {
                                     cout << StringInput.size();
                                     if(StringInput.size() > 0) {
-                                        //Read in input string (limit 15 characters as that is the max size of the board, ? entered for wild cards)
-
-                                        //Call generator functions the highest scoring letters are returned as a single string with delimiter '|' used between each word
+                                        //Read in input string (limit 10 characters)
+                                        //Call generator functions the highest scoring letters are returned as a set of string
                                         //please format string like so: "ADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)" so it can be displayed properly
-
-
-                                        //Load up dictionary & store for later comparison
-                                        Dictionary dictionary;
+                                        // dictionary is loaded before event loop so that the program does not de expensive work (load dictionary) multiple times
                                         int size = StringInput.size() - 1;
                                         if (StringInput.at(size) == '|') {
                                             StringInput = StringInput.substr(0, size);
@@ -238,7 +235,6 @@ int main()
                                             for (auto itr = TempGenTest.begin(); itr != TempGenTest.end(); itr++) {
                                                 StringFormat += *itr + " (" + to_string(score) + ")\t\t";
                                             }
-                                            //"ADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)\t\tADDS (6)\t\tDADS (6)\t\tDAGS (6)\t\tGADS (6)";
 
                                             // Wrap string in box can handle max three lines ish
 
@@ -270,7 +266,8 @@ int main()
 
 
                                     }
-                                    StringInput += "|";
+                                    if (StringInput.size() < 10)
+                                        StringInput += "|";
                                 }
                                
                             }
