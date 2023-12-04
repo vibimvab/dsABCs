@@ -264,7 +264,7 @@ int main()
                                                 }
                                             }
                                         } else{
-                                            PossibleWordsText1.setString("Nothing Found");
+                                            PossibleWordsText1.setString("Draw a Piece, nothing found");
                                         }
                                         setText(PossibleWordsText1, Width / 2.0f + 35, Height / 2.0f - 130);
 
