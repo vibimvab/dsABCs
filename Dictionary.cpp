@@ -3,9 +3,9 @@
 #include "Dictionary.h"
 
 Dictionary::Dictionary() {
-    if (!loadDictionary("files/Dictionary.txt")) { // replace the string to "../files/Dictionary.txt" to run with CMake
+    if (!loadDictionary("../files/Dictionary.txt")) {
         std::cout << "files/Dictionary.txt" << " file not found" << std::endl;
-    } // else loadDictionary("files/Dictionary.txt") is unnecessary already ran in if statement
+    }
 }
 
 bool Dictionary::loadDictionary(const string& fileName) {

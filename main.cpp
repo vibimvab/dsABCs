@@ -26,7 +26,6 @@ void setSprite(sf::Sprite& text, float x, float y) {
 
 int main()
 {
-   
      //Text input for main screen
     string StringInput = "|";
 
@@ -37,7 +36,9 @@ int main()
     sf::RenderWindow welcomeScreenWindow(sf::VideoMode(Width, Height), "dsABC's", sf::Style::Close);
     //the welcome screen font set-up
     sf::Font welcomeScreenFont;
-    welcomeScreenFont.loadFromFile("files/orange juice 2.0.ttf"); // replace the string to ../files/orange juice 2.0.ttf to run with CMake
+    welcomeScreenFont.loadFromFile("../files/orange juice 2.0.ttf");
+
+    // make texts
     sf::Text welcomeScreenTextLine1;
     welcomeScreenTextLine1.setFont(welcomeScreenFont);
     welcomeScreenTextLine1.setString("Welcome to");
@@ -45,6 +46,7 @@ int main()
     welcomeScreenTextLine1.setFillColor(sf::Color::White);
     welcomeScreenTextLine1.setStyle(sf::Text::Bold);
     setText(welcomeScreenTextLine1, Width / 2.0f, Height / 2.0f - 270);
+
     sf::Text welcomeScreenTextLine2;
     welcomeScreenTextLine2.setFont(welcomeScreenFont);
     welcomeScreenTextLine2.setString("dsABC's");
@@ -52,6 +54,7 @@ int main()
     welcomeScreenTextLine2.setFillColor(sf::Color::White);
     welcomeScreenTextLine2.setStyle(sf::Text::Bold);
     setText(welcomeScreenTextLine2, Width / 2.0f, Height / 2.0f - 120);
+
     sf::Text welcomeScreenTextLine3;
     welcomeScreenTextLine3.setFont(welcomeScreenFont);
     welcomeScreenTextLine3.setString("A Scrabble solving project by Insung Seo,");
@@ -59,6 +62,7 @@ int main()
     welcomeScreenTextLine3.setFillColor(sf::Color::White);
     welcomeScreenTextLine3.setStyle(sf::Text::Bold);
     setText(welcomeScreenTextLine3, Width / 2.0f, Height / 2.0f + 30);
+
     sf::Text welcomeScreenTextLine4;
     welcomeScreenTextLine4.setFont(welcomeScreenFont);
     welcomeScreenTextLine4.setString("Emma Mitchell, and Chrystina Woehler");
@@ -66,6 +70,7 @@ int main()
     welcomeScreenTextLine4.setFillColor(sf::Color::White);
     welcomeScreenTextLine4.setStyle(sf::Text::Bold);
     setText(welcomeScreenTextLine4, Width / 2.0f, Height / 2.0f + 30 + 50 + 10);
+
     sf::Text MainScreenInstructionText;
     MainScreenInstructionText.setFont(welcomeScreenFont);
     MainScreenInstructionText.setString("Enter up to 15 characters, using the ? symbol for wild card tiles");
@@ -73,6 +78,7 @@ int main()
     MainScreenInstructionText.setFillColor(sf::Color::Black);
     MainScreenInstructionText.setStyle(sf::Text::Bold);
     setText(MainScreenInstructionText, Width / 2.0f, Height / 2.0f + 140);
+
     sf::Text MainScreenLimitText;
     MainScreenLimitText.setFont(welcomeScreenFont);
     MainScreenLimitText.setString("*Use of ? limited to 2*");
@@ -91,31 +97,34 @@ int main()
     //Make sprites (buttons)
     sf::Sprite BeginButton;
     sf::Texture BeginButtonTexture;
-    BeginButtonTexture.loadFromFile("files/images/BeginButton.png"); // replace the string to ../files/images/BeginButton.png to run with CMake
+    BeginButtonTexture.loadFromFile("../files/images/BeginButton.png");
     BeginButton.setTexture(BeginButtonTexture);
     setSprite(BeginButton, Width / 2.0f, Height / 2.0f + 50 + 50 + 140);
+
     sf::Sprite GenerateButton;
     sf::Texture GenerateButtonTexture;
-    GenerateButtonTexture.loadFromFile("files/images/GenerateButton.png"); // replace the string to ../files/images/GenerateButton.png to run with CMake
+    GenerateButtonTexture.loadFromFile("../files/images/GenerateButton.png");
     GenerateButton.setTexture(GenerateButtonTexture);
     setSprite(GenerateButton, Width / 2.0f, Height / 2.0f + 50 + 50 + 200);
+
     sf::Sprite Background;
     sf::Texture BackgroundTexture;
-    BackgroundTexture.loadFromFile("files/images/Background.png"); // replace the string to ../files/images/Background.png to run with CMake
+    BackgroundTexture.loadFromFile("../files/images/Background.png");
     Background.setTexture(BackgroundTexture);
     setSprite(Background, Width / 2.0f, Height / 2.0f);
+
     sf::Sprite PossibleWords;
     sf::Texture PossibleWordsTexture;
-    PossibleWordsTexture.loadFromFile("files/images/PossibleWord.png"); // replace the string to ../files/images/PossibleWord.png to run with CMake
+    PossibleWordsTexture.loadFromFile("../files/images/PossibleWord.png");
     PossibleWords.setTexture(PossibleWordsTexture);
     setSprite(PossibleWords, Width / 2.0f, Height / 2.0f - 140);
+
     sf::Sprite TextBox;
     sf::Texture TextBoxTexture;
-    TextBoxTexture.loadFromFile("files/images/TextBox.png"); // replace the string to ../files/images/TextBox.png to run with CMake
+    TextBoxTexture.loadFromFile("../files/images/TextBox.png");
     TextBox.setTexture(TextBoxTexture);
     setSprite(TextBox, Width / 2.0f, Height / 2.0f + 195);
 
-   
 
     while (welcomeScreenWindow.isOpen()) {
         sf::Event event;
