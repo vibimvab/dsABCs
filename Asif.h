@@ -15,6 +15,7 @@
 #include "algorithm"
 #include "numeric"
 #include "Dictionary.h"
+#include "Word.h"
 using namespace std;
 
 
@@ -50,27 +51,69 @@ private:
         }
         return returnVec;
     }
+    vector<string> permutationsOfAssif(const vector<string> &listToPermutate) {
+        vector<string> permutationVector;
+        for (const string &originalString : listToPermutate) {
+            string currentString = originalString; // Create a copy before sorting
+            sort(currentString.begin(), currentString.end());
 
-public:
+            do {
+                permutationVector.push_back(currentString);
+            } while (next_permutation(currentString.begin(), currentString.end()));
+        }
+        return permutationVector;
+    }
     bool aValidWord(string word) {
+        bool val = false;
         Dictionary d;
-
-        return true;
+        val= d.find(word);
+        return val;
     }
-  vector<string> permutationsOfAssif(const vector<string> &listToPermutate) {   //this is my method to permute after a combination was done
-        vector<string> permutationVector;   //will return a vector of the permutations
-        vector<int> indices(listToPermutate.size());    //we will store a vector of indices of the permutation size
-        iota(indices.begin(), indices.end(), 0);    //we will get these indices in sequence
-        do {    //a do while loop to create the permutations
-            string pString;     //a blank string
-            for (int i : indices) {
-                pString = pString+ listToPermutate[i];  //append to the string
+    map<int, vector<string>> finalReturn(map<int, vector<string>> &map1, int &highestValue){
+        map<int, vector<string>> :: iterator itr;
+        map<int, vector<string>> returnMap;
+        int comparison = map1.begin()->first;
+        for (itr = map1.begin(); itr!=map1.end(); ++itr) {
+            if (itr->first>comparison){
+                comparison=itr->first;
+                highestValue = comparison;
             }
-            permutationVector.push_back(pString);   //add to the vector
-        } while (next_permutation(indices.begin(), indices.end()));     //while you can still permutate
-        return permutationVector;   //will return the permutations
+        }
+        returnMap[comparison] = map1[comparison];
+        return returnMap;
     }
-    vector<string> allAsif(const vector<string> &vec){  //this is the function that will be called 
+    vector<string> isAWordValid(const vector<string> &listToPermutate){
+        vector<string> permutations = permutationsOfAssif(listToPermutate);
+        vector<string> validWords;
+        for (int i = 0; i < permutations.size(); ++i) {
+            bool valid = aValidWord(permutations.at(i));
+            if (valid){
+                validWords.push_back(permutations.at(i));
+            }
+        }
+    }
+    map<int, vector<string>> wordValues(vector<string> &wordsInTheDictionary, int &highestValue){
+        int value=0;
+        map<int, vector<string>> mapOfScrabble;
+        map<int, vector<string>> correctVals;
+        Word w;
+        for (int i = 0; i < wordsInTheDictionary.size(); ++i) {
+            string word = wordsInTheDictionary.at(i);
+            value = w.evaluateWord(word);
+            if (mapOfScrabble.count(value)){
+                mapOfScrabble.at(value).push_back(word);
+            } else
+            {
+                mapOfScrabble[value].push_back(word);
+            }
+        }
+        correctVals= finalReturn(mapOfScrabble, highestValue);
+        return correctVals;
+    }
+public:
+
+
+    vector<string> allAsif(const vector<string> &vec){  //this is the function that will be called
         vector<string> finalList;
         vector<string> iterator;
         int r= vec.size();
@@ -82,8 +125,20 @@ public:
             iterator.clear();
             r--;
         }
-        return finalList;
+        vector<string> permutationOfFinalList;
+        permutationOfFinalList= isAWordValid(finalList);    //will return only the permutations found in the dictionary
+        int highestValue;
+        map<int, vector<string>> finalResult = wordValues(permutationOfFinalList, highestValue);
+        vector<string> vector1;
+        vector1 = finalResult[highestValue];
+        return vector1;
     }
-    
+
+
+
+
 
 };
+
+
+#endif //DSABCS_DATASTRUCT_H
