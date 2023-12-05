@@ -131,7 +131,7 @@ private:
         return vector1;
     }
 public:
-    vector<string> AsifCallFunction(string &s){
+    set<string> AsifCallFunction(string &s){
         string iter="";
         vector<string> concat;
         for (int i = 0; i < s.length(); ++i) {
@@ -139,7 +139,11 @@ public:
             concat.push_back(iter);
         }
         vector<string > ret = allAsif(concat);
-        return ret;
+        set<string> sets;
+        for (int i = 0; i < ret.size(); ++i) {
+            sets.insert(ret.at(i));
+        }
+        return sets;
     }
 
 };
