@@ -90,6 +90,7 @@ private:
                 validWords.push_back(permutations.at(i));
             }
         }
+        return validWords;
     }
     map<int, vector<string>> wordValues(vector<string> &wordsInTheDictionary, int &highestValue){
         int value=0;
