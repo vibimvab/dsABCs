@@ -3,8 +3,8 @@
 //
 //
 
-#ifndef DSABCS_DATASTRUCT_H
-#define DSABCS_DATASTRUCT_H
+#ifndef DSABCS_ASIF_H
+#define DSABCS_ASIF_H
 #include <iostream>
 #include "map"
 #include <vector>
@@ -18,8 +18,6 @@
 #include "Dictionary.h"
 #include "Word.h"
 using namespace std;
-
-
 class Asif {
 private:
     vector<vector<string>> AsifA(int num, const vector<string> &vec) {  //the asif algorithm
@@ -32,7 +30,7 @@ private:
         }
         for (int i = 0; i <= vec.size() - num; ++i) {
             firstVal = vec[i];  //getting the first word
-            auto combos = Asif(num - 1, {vec.begin() + i + 1, vec.end()}); //recursive call
+            auto combos = AsifA(num - 1, {vec.begin() + i + 1, vec.end()}); //recursive call
             for (auto &c: combos) {
                 c.push_back(firstVal);
                 finalList.push_back(c); //creating the final list
@@ -41,7 +39,7 @@ private:
         return finalList;   //return the final list
     }
     vector<string> AsifWords(int num, const vector<string> &vec){
-        vector<vector<string>> vec2 = Asif(num, vec);
+        vector<vector<string>> vec2 = AsifA(num, vec);
         vector<string> returnVec;
         for (int i = 0; i < vec2.size() ; ++i) {
             string concat= "";
@@ -146,4 +144,4 @@ public:
 };
 
 
-#endif //DSABCS_DATASTRUCT_H
+#endif //DSABCS_ASIF_H
