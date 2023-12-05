@@ -228,8 +228,10 @@ int main()
                                             StringInput = StringInput.substr(0, size);
                                         }
 
+                                        Asif asif;
                                         start = clock(); // calculating time
-                                        set<string> highestWords = AsifCallFunction(StringInput);
+                                        set<string> highestWords = asif.AsifCallFunction(StringInput);
+//                                        set<string> highestWords = getHighestWordsHeaps(StringInput, dictionary);
                                         finish = clock();
                                         duration = (double)(finish - start) / 1000000;
                                         cout << duration << "s" << endl;
