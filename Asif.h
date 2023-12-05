@@ -18,8 +18,8 @@
 #include "Dictionary.h"
 #include "Word.h"
 using namespace std;
-class Asif {
-private:
+class Asif {    //a class that does combinations and then permutations 
+private:    //all private methods 
     vector<vector<string>> AsifA(int num, const vector<string> &vec, Dictionary &d) {  //the asif algorithm
         //this algorithm takes in a vector of characters and the number that we want to use for combinations
         //references to Wikipedia.com and https://medium.com/codex/generating-combinations-efficiently-with-asifs-algorithm-d453e803893
@@ -50,41 +50,40 @@ private:
         }
         return returnVec;   //returning the simplified vec
     }
-    vector<string> permutationsOfAssif(const vector<string> &listToPermutate, Dictionary &d) {
-        vector<string> permutationVector;
-        for (const string &originalString : listToPermutate) {
+    vector<string> permutationsOfAssif(const vector<string> &listToPermutate, Dictionary &d) {  //method that finds and creates permutations
+        vector<string> permutationVector;   //vector of permutations 
+        for (const string &originalString : listToPermutate) {  //this is the list of words that are just combinations
             string currentString = originalString; // Create a copy before sorting
-            sort(currentString.begin(), currentString.end());
-
+            sort(currentString.begin(), currentString.end());   //sort before permutation
             do {
-                permutationVector.push_back(currentString);
-            } while (next_permutation(currentString.begin(), currentString.end()));
+                permutationVector.push_back(currentString); //add to permutations
+            } while (next_permutation(currentString.begin(), currentString.end())); //do the next permutations 
         }
-        return permutationVector;
+        return permutationVector;       //return valid permutations 
     }
-    bool aValidWord(string word, Dictionary &d) {
+    bool aValidWord(string word, Dictionary &d) {   //a method to check if a word is valid 
         bool val = false;
-        val= d.find(word);
+        val= d.find(word);  //if in dictionary or not 
         return val;
     }
-    map<int, vector<string>> finalReturn(map<int, vector<string>> &map1, int &highestValue, Dictionary &d){
-        map<int, vector<string>> :: iterator itr;
-        map<int, vector<string>> returnMap;
-        int comparison = map1.begin()->first;
-        for (itr = map1.begin(); itr!=map1.end(); ++itr) {
+    map<int, vector<string>> finalReturn(map<int, vector<string>> &map1, int &highestValue, Dictionary &d){     //this method creates a map that just has a vector with the highest scoring words 
+        map<int, vector<string>> :: iterator itr;   //to iterate over a map that has everything
+        map<int, vector<string>> returnMap; //a map w just highscoring words
+        int comparison = map1.begin()->first;   //will use this to compare 
+        for (itr = map1.begin(); itr!=map1.end(); ++itr) {  //iterate over full map and condense it 
             if (itr->first>comparison){
                 comparison=itr->first;
                 highestValue = comparison;
             }
         }
         returnMap[comparison] = map1[comparison];
-        return returnMap;
+        return returnMap;   //return condensed map 
     }
-    vector<string> isAWordValid(const vector<string> &listToPermutate, Dictionary &d){
-        vector<string> permutations = permutationsOfAssif(listToPermutate, d);
-        vector<string> validWords;
-        for (int i = 0; i < permutations.size(); ++i) {
-            bool valid = aValidWord(permutations.at(i), d);
+    vector<string> isAWordValid(const vector<string> &listToPermutate, Dictionary &d){  //going through a lot of the words and seeing if they are in the dict
+        vector<string> permutations = permutationsOfAssif(listToPermutate, d);  //taking a vector and doing permutations
+        vector<string> validWords;  //the return vector of valid words
+        for (int i = 0; i < permutations.size(); ++i) {     //checking to see if a word is valid 
+            bool valid = aValidWord(permutations.at(i), d);     //running a checker function
             if (valid){
                 validWords.push_back(permutations.at(i));
             }
@@ -123,14 +122,14 @@ private:
         }
         vector<string> permutationOfFinalList;  //then permutating through every combo
         permutationOfFinalList= isAWordValid(finalList, d);    //will return only the permutations found in the dictionary
-        int highestValue;
-        map<int, vector<string>> finalResult = wordValues(permutationOfFinalList, highestValue, d);
+        int highestValue;   //finding the word with the highest score 
+        map<int, vector<string>> finalResult = wordValues(permutationOfFinalList, highestValue, d); //will return a map of a score and the highest score 
         vector<string> vector1;
         vector1 = finalResult[highestValue];
-        return vector1;
+        return vector1; //return a vector of all words that have the best score 
     }
-public:
-    set<string> AsifCallFunction(string &s, Dictionary &d){
+public: //the method called in main 
+    set<string> AsifCallFunction(string &s, Dictionary &d){ //this is the call function that is helpful in main
         string iter="";     //string that is sent in
         vector<string> concat;  //a vector of all of the chars (potential scrabble letters)
         for (int i = 0; i < s.length(); ++i) {  //creating the vector
