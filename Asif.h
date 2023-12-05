@@ -22,7 +22,7 @@ using namespace std;
 
 class Asif {
 private:
-    vector<vector<string>> AsifAlgorithm(int num, const vector<string> &vec) {  //the asif algorithm
+    vector<vector<string>> AsifA(int num, const vector<string> &vec) {  //the asif algorithm
         //this algorithm takes in a vector of characters and the number that we want to use for combinations
         //references to Wikipedia.com and https://medium.com/codex/generating-combinations-efficiently-with-asifs-algorithm-d453e803893
         vector<vector<string>> finalList;   //will store all the combinations
@@ -32,7 +32,7 @@ private:
         }
         for (int i = 0; i <= vec.size() - num; ++i) {
             firstVal = vec[i];  //getting the first word
-            auto combos = AsifAlgorithm(num - 1, {vec.begin() + i + 1, vec.end()}); //recursive call
+            auto combos = Asif(num - 1, {vec.begin() + i + 1, vec.end()}); //recursive call
             for (auto &c: combos) {
                 c.push_back(firstVal);
                 finalList.push_back(c); //creating the final list
@@ -41,7 +41,7 @@ private:
         return finalList;   //return the final list
     }
     vector<string> AsifWords(int num, const vector<string> &vec){
-        vector<vector<string>> vec2 = AsifAlgorithm(num, vec);
+        vector<vector<string>> vec2 = Asif(num, vec);
         vector<string> returnVec;
         for (int i = 0; i < vec2.size() ; ++i) {
             string concat= "";
