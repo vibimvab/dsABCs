@@ -2,11 +2,11 @@
 #include "Algorithm.h"
 #include "Dictionary.h"
 #include "Word.h"
+#include "Asif.h"
 #include <iostream>
 #include <fstream>
 using namespace std;
 
-//fonts sourced from www.1001freefonts.com
 void setText(sf::Text& text, float x, float y) {
     //finds the local bounds of the text and changes it to be centered
     sf::FloatRect textBounds = text.getLocalBounds();
@@ -229,7 +229,7 @@ int main()
                                         }
 
                                         start = clock(); // calculating time
-                                        set<string> highestWords = getHighestWordsHeaps(StringInput, dictionary);
+                                        set<string> highestWords = AsifCallFunction(StringInput);
                                         finish = clock();
                                         duration = (double)(finish - start) / 1000000;
                                         cout << duration << "s" << endl;
